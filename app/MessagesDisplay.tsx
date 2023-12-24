@@ -10,11 +10,22 @@ const socket = io('http://localhost:3001');
 const MessagesDisplay = () => {
     const [messages, setMessages] = useState<any[]>([]);
 
-    useEffect(() => {
-        socket.on('chat message', (message: any) => {
-            setMessages((prev: any) => [...prev, message]);
-        })
 
+    const handleNewMessage = (message: any) => {
+        setMessages((prev: any) => [...prev, message]);
+        test = true;
+        console.log("reloading ");
+    };
+
+    let test = false;
+
+    useEffect(() => {
+
+        if (!test) {
+            socket.on('chat message', handleNewMessage);
+        }
+
+        return () => { socket.off('chat message', handleNewMessage) };
     }, []);
 
     console.log('messages : ', messages);

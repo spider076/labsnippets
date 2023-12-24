@@ -14,7 +14,7 @@ const io = socketIO(server, {
 });
 
 io.on('connection', (socket) => {
-    console.log('A user connected');
+    console.log('A user connected : ', socket.id);
 
     // Listen for chat messages
     socket.on('chat message', (message) => {
