@@ -1,26 +1,28 @@
 // server.js
-const express = require('express');
+const app = require('express')();
 const http = require('http');
 const socketIO = require('socket.io');
 
-const app = express();
 const server = http.createServer(app);
 const io = socketIO(server, {
     cors: {
         origin: "*",
-        methods: ['GET', 'POST'],
-
+        // methods: ['GET', 'POST'],
     }
 });
 
 io.on('connection', (socket) => {
     console.log('A user connected : ', socket.id);
 
-    // Listen for chat messages
-    socket.on('chat message', (message) => {
-        console.log('Message:', message);
-        // Broadcast the message to all connected clients
-        io.emit('chat message', message);
+    // Listen for chat snippets
+    socket.on('snippets', (snippet, room) => {
+        // Broadcast the snippets to all connected members
+        if (room == "") {
+            io.emit('snippets', snippet);
+        } else {
+            // Broadcast the snippets to only room members
+            socket.to(room).emit('snippets', snippet);
+        }
     });
 
     // Handle disconnection
