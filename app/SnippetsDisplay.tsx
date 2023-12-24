@@ -36,7 +36,7 @@ const SnippetsDisplay = () => {
     // const snippets = useRecoilValue(snippetsState);
 
     return (
-        <main className='w-full max-h-[80vh] bg-[#1b1b1b] h-[500px] '>
+        <main className='w-full bg-[#1b1b1b] h-[500px] '>
             <h1 className="p-2 text-lg ml-2">Snippets : </h1>
             {socket.connected && (
                 <h1 className='text-blue-300 text-center py-2  sm:text-[1.2rem]'>You are connected with Id : {socket.id}</h1>
