@@ -4,31 +4,54 @@ import React, { useEffect, useState } from 'react'
 import { useRecoilState, useRecoilValue } from 'recoil';
 import { userState } from './atoms/user';
 import { io } from 'socket.io-client/debug';
+import SnippetModel from "../backend/SnippetsModel";
 
 const socket = io('http://localhost:3001');
 
+
 const SnippetsDisplay = () => {
-    const [snippets, setsnippets] = useState<any[]>([]);
+    const [snippets, setSnippets] = useState<any[]>([]);
+
 
     const [, setUserId] = useRecoilState(userState);
 
 
-    const handleNewMessage = (snippet: any) => {
-        setsnippets((prev: any) => [...prev, snippet]);
-        token = true;
-        console.log("reloading ");
+    const handleNewSnippets = async () => {
+        // setsnippets((prev: any) => [...prev, snippet]);
+        // token = true;
+        // console.log("reloading ");
+        try {
+            const response = await fetch('/api/snippets', {
+                method: 'GET',
+            });
+            const newSnippets = await response.json();
+
+            console.log("new snippets : ", newSnippets);
+            setSnippets(newSnippets.data);
+            // token = true;
+        } catch (err) {
+            console.log("error : ", err);
+            alert('Failed to get snippets');
+        }
     };
 
     let token = false;
 
     useEffect(() => {
-        if (!token) {
-            socket.on('snippets', handleNewMessage);
-            console.log("socketid", socket.id);
-            setUserId(socket.id);
+        try {
+            console.log('connection established to mongodb');
+        } catch (err) {
+            console.log("erro while connecting mongodb");
         }
 
-        return () => { socket.off('snippets', handleNewMessage) };
+        if (!token) {
+            // socket.on('snippets', handleNewMessage);
+            // console.log("socketid", socket.id);
+            // setUserId(socket.id);
+            handleNewSnippets();
+        }
+
+        // return () => { socket.off('snippets', handleNewMessage) };
     }, []);
 
     console.log('snippets : ', snippets);
@@ -46,7 +69,7 @@ const SnippetsDisplay = () => {
                 {snippets.length > 0 && snippets.map((payload) => (
                     <div className='p-4 flex flex-col bg-[#3a3a3a] text-gray-100  border-b border-gray-300 gap-4'>
                         <span className="text-[1rem] font-semibold border-b w-max">UserId :
-                            <span className="ml-2 text-orange-400">{payload.userId}</span> </span>
+                            <span className="ml-2 text-orange-400">{payload._id}</span> </span>
                         <p className="mr-3">{payload.snippet}</p>
                     </div>
                 ))}
