@@ -9,5 +9,5 @@ const snippetSchema = new mongoose_1.default.Schema({
     snippet: String,
     timestamp: { type: Date, default: new Date().toLocaleDateString('en-US') },
 });
-const SnippetModel = mongoose_1.default.model('Snippet', snippetSchema);
+const SnippetModel = mongoose_1.default.models.Snippet || mongoose_1.default.model('Snippet', snippetSchema);
 exports.default = SnippetModel;
