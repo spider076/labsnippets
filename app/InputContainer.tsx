@@ -5,7 +5,7 @@ import { useRecoilValue } from 'recoil';
 import { userState } from './atoms/user';
 import { io } from 'socket.io-client';
 
-const socket = io('https://labsnippets.onrender.com');
+const socket = io('https://labsnippets.onrender.com:3001');
 
 const InputContainer = () => {
     const [snippet, setSnippet] = useState<string>("");
