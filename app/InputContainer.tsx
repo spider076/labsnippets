@@ -1,11 +1,11 @@
 "use client";
 
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { useRecoilValue } from 'recoil';
 import { userState } from './atoms/user';
 import { io } from 'socket.io-client';
 
-const socket = io('https://labsnippets.onrender.com:3001');
+const socket = io('https://labsnippets.onrender.com', {withCredentials: true});
 
 const InputContainer = () => {
     const [snippet, setSnippet] = useState<string>("");
@@ -37,6 +37,14 @@ const InputContainer = () => {
         if (room === "") return;
         console.log("message : ", room);
     };
+
+    // useEffect(() => {
+    //     const socket = io();
+
+    //     socket.on('snippets', (snippit) =. {
+            
+    //     })
+    // },[])
 
     return (
         <div className="mt-16 flex flex-col space-y-4 w-full">
