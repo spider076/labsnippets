@@ -5,7 +5,7 @@ import { io } from 'socket.io-client/debug';
 import spinner from './spinner.svg';
 import Image from 'next/image';
 
-const socket = io('https://labsnippets.onrender.com:3000');
+const socket = io('https://labsnippets.onrender.com:3001');
 
 
 const SnippetsDisplay = () => {
