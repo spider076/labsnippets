@@ -1,7 +1,8 @@
-import SnippetModel from '@/backend/SnippetsModel';
+import SnippetModel from '../SnippetsModel';
 import mongoose from 'mongoose';
 import type { NextApiRequest, NextApiResponse } from 'next'
 import { NextRequest, NextResponse } from 'next/server';
+import { Server } from 'socket.io';
 
 type ResponseData = {
     message: string
@@ -32,4 +33,4 @@ export async function GET(
         console.log(err);
         return NextResponse.json({ error: 'server error' });
    }
-}
+};

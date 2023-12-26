@@ -1,20 +1,18 @@
 "use client";
 
 import React, { useEffect, useState } from 'react'
-import { useRecoilState, useRecoilValue } from 'recoil';
-import { userState } from './atoms/user';
 import { io } from 'socket.io-client/debug';
-import SnippetModel from "../backend/SnippetsModel";
+import spinner from './spinner.svg';
+import Image from 'next/image';
 
-const socket = io('http://localhost:3001');
+const socket = io('https://labsnippets.onrender.com');
+
+console.log("woring : ", socket);
 
 
 const SnippetsDisplay = () => {
     const [snippets, setSnippets] = useState<any[]>([]);
-
-
-    const [, setUserId] = useRecoilState(userState);
-
+    const [loading, setLoading] = useState(true);
 
     const handleNewSnippets = async () => {
         // setsnippets((prev: any) => [...prev, snippet]);
@@ -28,30 +26,19 @@ const SnippetsDisplay = () => {
 
             console.log("new snippets : ", newSnippets);
             setSnippets(newSnippets.data);
+            setLoading(false);
             // token = true;
         } catch (err) {
             console.log("error : ", err);
             alert('Failed to get snippets');
+        } finally {
+            setLoading(false);
         }
     };
 
-    let token = false;
 
     useEffect(() => {
-        try {
-            console.log('connection established to mongodb');
-        } catch (err) {
-            console.log("erro while connecting mongodb");
-        }
-
-        if (!token) {
-            // socket.on('snippets', handleNewMessage);
-            // console.log("socketid", socket.id);
-            // setUserId(socket.id);
             handleNewSnippets();
-        }
-
-        // return () => { socket.off('snippets', handleNewMessage) };
     }, []);
 
     console.log('snippets : ', snippets);
@@ -59,12 +46,14 @@ const SnippetsDisplay = () => {
     // const snippets = useRecoilValue(snippetsState);
 
     return (
-        <main className='w-full bg-[#1b1b1b] h-[500px] '>
+        <main className='mb-10 w-full bg-[#1b1b1b] h-[500px] '>
             <h1 className="p-2 text-lg ml-2">Snippets : </h1>
             {socket.connected && (
                 <h1 className='text-blue-300 text-center py-2  sm:text-[1.2rem]'>You are connected with Id : {socket.id}</h1>
             )}
-            <div className={`h-full text-black flex-1 border 
+
+            {loading && <Image src={spinner} className="mx-auto" height={100} width={100} alt="loading..." />}
+            <div className={`max-h-full  text-black flex-1 border 
               rounded-md shadow-2xl shadow-gray-800 border-gray-800 ${snippets.length > 0 ? 'overflow-y-scroll' : ''}`}>
                 {snippets.length > 0 && snippets.map((payload) => (
                     <div className='p-4 flex flex-col bg-[#3a3a3a] text-gray-100  border-b border-gray-300 gap-4'>

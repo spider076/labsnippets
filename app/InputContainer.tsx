@@ -4,7 +4,6 @@ import React, { useState } from 'react';
 import { useRecoilValue } from 'recoil';
 import { userState } from './atoms/user';
 import { io } from 'socket.io-client';
-import { nanoid } from 'nanoid';
 
 const socket = io('http://localhost:3001');
 
@@ -31,7 +30,8 @@ const InputContainer = () => {
         console.log("room : ", room);
         socket.emit('snippets', { snippet: snippet, userId: String(userId) }, room); // params(socket-id, data, room)
         setSnippet('');
-    }
+    };
+    
     const join = (e: any) => {
         e.preventDefault();
         if (room === "") return;
@@ -39,7 +39,7 @@ const InputContainer = () => {
     };
 
     return (
-        <div className="mt-10 flex flex-col space-y-4 w-full">
+        <div className="mt-16 flex flex-col space-y-4 w-full">
             <form onSubmit={(e) => send(e)} className='w-full flex'>
                 {/* <label htmlFor="message">Message</label> */}
                 <input name='message' onChange={e => snippetChange(e)} value={snippet} className='p-1 outline-none flex-1 placeholder:text-gray-500
@@ -56,7 +56,6 @@ const InputContainer = () => {
                 rounded-r-md font-semibold" >Join</button>
             </form>
         </div>
-
     )
 }
 
