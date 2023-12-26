@@ -7,8 +7,6 @@ import Image from 'next/image';
 
 const socket = io('https://labsnippets.onrender.com');
 
-console.log("woring : ", socket);
-
 
 const SnippetsDisplay = () => {
     const [snippets, setSnippets] = useState<any[]>([]);
@@ -56,7 +54,7 @@ const SnippetsDisplay = () => {
             <div className={`max-h-full  text-black flex-1 border 
               rounded-md shadow-2xl shadow-gray-800 border-gray-800 ${snippets.length > 0 ? 'overflow-y-scroll' : ''}`}>
                 {snippets.length > 0 && snippets.map((payload) => (
-                    <div className='p-4 flex flex-col bg-[#3a3a3a] text-gray-100  border-b border-gray-300 gap-4'>
+                    <div key={payload._id} className='p-4 flex flex-col bg-[#3a3a3a] text-gray-100  border-b border-gray-300 gap-4'>
                         <span className="text-[1rem] font-semibold border-b w-max">UserId :
                             <span className="ml-2 text-orange-400">{payload._id}</span> </span>
                         <p className="mr-3">{payload.snippet}</p>
