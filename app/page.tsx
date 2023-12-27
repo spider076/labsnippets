@@ -11,12 +11,13 @@ export default function Home() {
       <RecoilRoot>
         <h1 className='text-2xl border-b border-dotted text-center p-4 font-semibold bg-black text-gray-100'>
           Lab-Snippets 💻</h1>
-        <div className='flex flex-col mt-10 gap-5 max-h-[70vh] p-10 items-center 
-        sm:w-[700px] w-full justify-center m-auto'> 
+        <div className='flex flex-col mt-10 gap-5 max-h-[90vh] sm:p-10 p-2 items-center 
+        sm:w-[700px] w-full justify-center m-auto'>
           <SnippetsDisplay />
           <InputContainer />
         </div>
       </RecoilRoot>
+
     </main>
   )
 }

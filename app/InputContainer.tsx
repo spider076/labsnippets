@@ -3,15 +3,17 @@
 import React, { useState, useEffect } from 'react';
 import { useRecoilValue } from 'recoil';
 import { userState } from './atoms/user';
-import { io } from 'socket.io-client';
+import { io } from 'socket.io-client/debug';
 
-const socket = io('https://labsnippets.onrender.com', {withCredentials: true});
+
+const socket = io('https://labsnippets.onrender.com/');
+// const socket = io('http://localhost:3001/');
+
 
 const InputContainer = () => {
     const [snippet, setSnippet] = useState<string>("");
     const [room, setRoom] = useState<string>("");
 
-    console.log('socket : ', socket);
 
     const userId = useRecoilValue(userState);
 
@@ -30,21 +32,18 @@ const InputContainer = () => {
         console.log("room : ", room);
         socket.emit('snippets', { snippet: snippet, userId: String(userId) }, room); // params(socket-id, data, room)
         setSnippet('');
+        window.location.reload();
     };
-    
+
     const join = (e: any) => {
         e.preventDefault();
         if (room === "") return;
         console.log("message : ", room);
     };
 
-    // useEffect(() => {
-    //     const socket = io();
-
-    //     socket.on('snippets', (snippit) =. {
-            
-    //     })
-    // },[])
+    useEffect(() => {
+        console.log('socket ::: ', socket);
+    }, [])
 
     return (
         <div className="mt-16 flex flex-col space-y-4 w-full">

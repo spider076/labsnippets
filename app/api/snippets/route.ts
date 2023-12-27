@@ -2,6 +2,7 @@ import SnippetModel from '../SnippetsModel';
 import mongoose from 'mongoose';
 import type { NextApiRequest, NextApiResponse } from 'next'
 import { NextRequest, NextResponse } from 'next/server';
+import { parse } from 'path';
 import { Server } from 'socket.io';
 
 type ResponseData = {
@@ -34,3 +35,19 @@ export async function GET(
         return NextResponse.json({ error: 'server error' });
    }
 };
+
+export async function DELETE(
+    req: NextRequest,
+) {
+    const { id } = await req.json();
+
+    const snippetId = new mongoose.Types.ObjectId(id);
+    
+    try {
+        await SnippetModel.findByIdAndDelete(snippetId);
+        return NextResponse.json({ message: 'Snippet deleted successfully' }, { status: 200 });
+    } catch (err) {
+        console.log(err);
+        return NextResponse.json({ error: 'Failed to delete snippet' }, { status: 400});
+    }
+}
