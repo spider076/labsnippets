@@ -1,13 +1,6 @@
 import SnippetModel from '../SnippetsModel';
 import mongoose from 'mongoose';
-import type { NextApiRequest, NextApiResponse } from 'next'
 import { NextRequest, NextResponse } from 'next/server';
-import { parse } from 'path';
-import { Server } from 'socket.io';
-
-type ResponseData = {
-    message: string
-}
 
 const MONGODB_URL = "mongodb+srv://saad76:EKrYWkWPUSQHTLLn@cluster0.wgmqb0q.mongodb.net/";
 
