@@ -55,13 +55,13 @@ const InputContainer = () => {
                 hover:-translate-x-2 transition-all ease-in-out  bg-[#21a9d3]
                  border-gray-700 font-semibold rounded-r-md" >Send</button>
             </form>
-            <form onSubmit={join} className="w-full flex">
+            {/* <form onSubmit={join} className="w-full flex">
                 <input name='room' onChange={e => roomChange(e)} value={room}
                     className='p-1 outline-none flex-1 placeholder:text-gray-500
                      text-orange-900' type='text' placeholder="RoomId/UserId" />
                 <button type="submit" className="p-1 px-5 border text-black bg-orange-400 border-gray-700 hover:-translate-x-2 transition-all ease-in-out
                 rounded-r-md font-semibold" >Join</button>
-            </form>
+            </form> */}
         </div>
     )
 }
