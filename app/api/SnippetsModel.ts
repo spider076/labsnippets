@@ -1,7 +1,6 @@
 import mongoose from 'mongoose';
 
 const snippetSchema = new mongoose.Schema({
-    userId: String,
     snippet: String,
     timestamp: { type: Date, default: new Date().toLocaleDateString('en-US') },
 })
