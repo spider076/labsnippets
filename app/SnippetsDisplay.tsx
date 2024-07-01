@@ -68,6 +68,8 @@ const SnippetsDisplay = () => {
     handleNewSnippets();
   }, []);
 
+  const snippetsLength = snippets && typeof snippets != "undefined" ? snippets.length : 0;
+
   return (
     <main className="mb-10 w-full bg-[#1b1b1b] h-[500px] ">
       <Toaster />
@@ -85,10 +87,10 @@ const SnippetsDisplay = () => {
 
       <div
         className={`max-h-full  text-black flex-1 border 
-              rounded-md shadow-2xl shadow-gray-800 border-gray-800 ${snippets.length > 0 ? "overflow-y-scroll" : ""
+              rounded-md shadow-2xl shadow-gray-800 border-gray-800 ${snippetsLength > 0 ? "overflow-y-scroll" : ""
           }`}
       >
-        {snippets.length > 0 &&
+        {snippetsLength > 0 &&
           snippets.map((payload) => (
             <div
               key={payload._id}
